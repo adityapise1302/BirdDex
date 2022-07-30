@@ -8,7 +8,6 @@ function setDataOnWindow(bird_index){
         console.log(obj)
         total_birds = Object.keys(obj).length;
         index = bird_index;
-        window.alert(index);
         document.getElementById("picture").src = obj[index.toString()]["img_url"];
         document.getElementById("number-bird").innerHTML = index.toString();
         document.getElementById("name-screen").innerHTML = obj[index.toString()]["name"];
