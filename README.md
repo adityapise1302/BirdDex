@@ -1,3 +1,5 @@
+Devpost Link: https://devpost.com/software/bird-dex
+
 ## Inspiration
 I am a big fan of Pokemon and bird watching. I wanted to combine both my favorite things so I built BirdDex which is similar to Pokédex in the sense that it catalogues and provides information regarding bird species. Also whenever I go bird watching I would like a device like Pokédex which would catalogue and provide the information of the birds I capture (on my camera) and BirdDex does the exact same thing!
 
@@ -25,3 +27,4 @@ When uploaded a picture it identifies the species of the bird in the picture, th
 ## What's next for Bird Dex
 1. Improving the machine learning model and providing support for more species of birds.
 2. Adding ability to store multiple pictures of the species.
+
