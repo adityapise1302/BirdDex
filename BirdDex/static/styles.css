@@ -7,23 +7,6 @@ body{
   justify-content: center;
   flex-direction: column;
 }
-#language-selector{
-  display: flex;
-  justify-content: flex-end;
-}
-select {
-  width: 150px;
-  height: 44px;
-  font-size: 15px;
-  background-color: #232323;
-  color: #DEDEDE;
-  border: 5px solid #DEDEDE;
-  font-family: 'VT323', monospace;
-  font-size: 27px;
-}
-#optionLan:hover {
-  background-color: #C07C2B !important;
-}
 #pokedex-container{
   display: flex;
   justify-content: center;
@@ -241,19 +224,7 @@ select {
   font-size: 25px;
   color: #ffffff;
 }
-#gender-container{
-  width: 30px;
-  display: flex;
-  justify-content: space-between;
-  margin-right: 10px;
-}
-.gender-icon{
-  color: #7E7E7E;
-  cursor: pointer;
-}
-.gender-active{
-  color: #D6D3BB;
-}
+
 #circle3{
   width: 10px;
   height: 10px;
