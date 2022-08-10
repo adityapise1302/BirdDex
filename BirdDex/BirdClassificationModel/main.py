@@ -5,12 +5,17 @@ from tensorflow.keras import layers
 
 
 def train_model():
+    """
+    This function trains the model for classifying the species of bird in the image.
+    :return: None
+    """
     batch_size = 32
     img_height = 180
     img_width = 180
     data_dir = "./train/"
     data_dir = pathlib.Path(data_dir)
 
+    # Creating training set.
     train_ds = tf.keras.utils.image_dataset_from_directory(
         data_dir,
         validation_split=0.2,
@@ -22,6 +27,7 @@ def train_model():
 
     class_names = train_ds.class_names
 
+    # Creating validation set.
     val_ds = tf.keras.utils.image_dataset_from_directory(
         data_dir,
         validation_split=0.2,
@@ -82,10 +88,16 @@ def train_model():
         validation_data=val_ds,
         epochs=epochs
     )
+    # Save the model
     model.save("saved_model/bird_classification")
 
 
 def predict_bird_species(img_path: str) -> str:
+    """
+
+    :param img_path:
+    :return:
+    """
     img_height = 180
     img_width = 180
     model = tf.keras.models.load_model('/Users/adityapise/HackathonProjects/BirdDex/BirdDex/BirdClassificationModel'
