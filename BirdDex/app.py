@@ -18,6 +18,7 @@ app.config['SECRET_KEY'] = "secret-key"
 db = SQLAlchemy(app)
 
 
+# Class for the SQLAlchemy table
 class BirdsCatalog(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), unique=True)
@@ -31,12 +32,22 @@ db.create_all()
 
 
 def get_latin_name(common_name: str) -> str:
+    """
+    This function returns the latin name of the provided species common name.
+    :param common_name: The common name of the bird species. It is a string.
+    :return: A string suggesting the latin name of the species
+    """
     df = pd.read_csv("birds_latin_names.csv")
     latin_name = df[df['class'] == common_name.upper()]["SCIENTIFIC NAME"].values[0]
     return latin_name
 
 
 def get_sound_bird(common_name: str) -> str:
+    """
+    This function returns the path to the sound of the bird species whose common name is provided.
+    :param common_name: The common name of the species whose sound is to be found. It is a string.
+    :return: A string suggesting the path of the sound of the bird species.
+    """
     params = {
         "query": common_name
     }
