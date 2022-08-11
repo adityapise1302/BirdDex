@@ -37,16 +37,19 @@ def train_model():
         batch_size=batch_size
     )
 
+    # Dataset Configuration
     AUTOTUNE = tf.data.AUTOTUNE
 
     train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=AUTOTUNE)
     val_ds = val_ds.cache().prefetch(buffer_size=AUTOTUNE)
 
+    # Data standardization
     normalization_layer = tf.keras.layers.Rescaling(1. / 255)
 
     normalized_ds = train_ds.map(lambda x, y: (normalization_layer(x), y))
     image_batch, labels_batch = next(iter(normalized_ds))
 
+    # Data augmentation to reduce overfitting
     with tf.device('/cpu:0'):
         data_augmentation = tf.keras.Sequential(
             [
@@ -59,6 +62,7 @@ def train_model():
             ]
         )
 
+    # Create model
     num_classes = len(class_names)
 
     model = tf.keras.Sequential([
@@ -76,12 +80,15 @@ def train_model():
         layers.Dense(num_classes)
     ])
 
+    # Compile the model
     model.compile(optimizer='adam',
                   loss=tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),
                   metrics=['accuracy'])
 
     model.build()
     model.summary()
+
+    # Training of model
     epochs = 15
     history = model.fit(
         train_ds,
@@ -95,13 +102,16 @@ def train_model():
 def predict_bird_species(img_path: str) -> str:
     """
 
-    :param img_path:
-    :return:
+    :param img_path: Path of the image of the bird on the machine. It is a string.
+    :return: A string suggesting the species of the bird in the image.
     """
     img_height = 180
     img_width = 180
+    # Load the saved model
     model = tf.keras.models.load_model('/Users/adityapise/HackathonProjects/BirdDex/BirdDex/BirdClassificationModel'
                                        '/saved_model/bird_classification')
+
+    # List of species names
     class_names = ['ABBOTTS BABBLER', 'ABBOTTS BOOBY', 'ABYSSINIAN GROUND HORNBILL', 'AFRICAN CROWNED CRANE',
                    'AFRICAN EMERALD CUCKOO', 'AFRICAN FIREFINCH', 'AFRICAN OYSTER CATCHER', 'ALBATROSS',
                    'ALBERTS TOWHEE',
@@ -198,6 +208,7 @@ def predict_bird_species(img_path: str) -> str:
                    'YELLOW CACIQUE',
                    'YELLOW HEADED BLACKBIRD']
 
+    # Load the image in required format
     img = tf.keras.utils.load_img(
         img_path, target_size=(img_height, img_width)
     )
@@ -205,6 +216,7 @@ def predict_bird_species(img_path: str) -> str:
     img_array = tf.keras.utils.img_to_array(img)
     img_array = tf.expand_dims(img_array, 0)
 
+    # Predict the bird species
     predictions = model.predict(img_array)
     score = tf.nn.softmax(predictions[0])
 
